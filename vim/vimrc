@@ -1,0 +1,194 @@
+filetype plugin indent on " required
+
+" execute pathogen#infect()
+set shell=/bin/bash
+set exrc
+set secure
+set noswapfile
+set encoding=utf-8
+set showmatch
+set nu
+set hlsearch
+set colorcolumn=80 " flake limit is 79
+set cursorline
+syntax enable
+syntax on
+set nocompatible              " required
+filetype indent on
+set autoindent
+set backspace=indent,eol,start
+set completeopt+=noinsert
+" ALE configurations
+" let g:ale_completion_enabled = 1
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" add all your plugins here (note older versions of Vundle
+" used Bundle instead of Plugin)
+
+" ... PLUGINS ...
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'itchyny/lightline.vim'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'jnurmine/Zenburn'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'kien/ctrlp.vim'
+" Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'lervag/vimtex'
+Bundle 'chase/vim-ansible-yaml'
+Plugin 'pearofducks/ansible-vim'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'Vimjas/vim-python-pep8-indent'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'vim-scripts/dbext.vim'
+Plugin 'jalvesaq/Nvim-R'
+Plugin 'chrisbra/csv.vim'
+Plugin 'Rip-Rip/clang_complete'
+Plugin 'tpope/vim-vinegar'
+" Plugin 'w0rp/ale'
+Plugin 'ncm2/ncm2'
+Plugin 'roxma/nvim-yarp'
+Plugin 'ncm2/ncm2-bufword'
+Plugin 'ncm2/ncm2-path'
+Plugin 'majutsushi/tagbar'
+Plugin 'neo4j-contrib/cypher-vim-syntax'
+Plugin 'vim-airline/vim-airline'
+Plugin 'sickill/vim-monokai'
+Plugin 'palantir/python-language-server'
+Plugin 'autozimu/LanguageClient-neovim'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+
+" if has('gui_running')
+"   set background=dark
+"   colorscheme solarized
+" else
+"   colorscheme zenburn
+" endif
+
+" Set additional colorschemes
+" set background=light
+colorscheme monokai
+
+" Set up ctrl-p
+let g:ctrlp_user_command = ['.git/', 'git ls-files --cached --others  --exclude-standard %s']
+let g:ctrlp_use_caching = 0
+let g:ctrlp_max_files = 0 
+let g:ctrlp_max_depth = 100
+let g:ctrlp_working_path_mode='' 
+
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+
+" Syntactic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" enable ncm2 for all buffers
+" autocmd BufEnter * call ncm2#enable_for_buffer()
+
+" IMPORTANT: :help Ncm2PopupOpen for more information
+" set completeopt=noinsert,menuone,noselect
+
+" autocmd vimenter * NERDTree
+" let NERDTreeIgnore=['\.pyc$', '\~$'] " ignore files in NERDTree
+" let g:AutoPairsFlyMode = 0
+" let g:AutoPairsShortcutBackInsert = '<M-b>'
+
+" file explorer
+let g:netrw_liststyle=3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+
+augroup ProjectDrawer
+  autocmd!
+  autocmd VimEnter * :Vexplore
+augroup END
+
+" Set markdown file formatting
+autocmd BufNewFile,BufRead *.md set filetype=markdown
+
+" screen split
+set splitbelow
+set splitright
+
+"Tag Bar
+nmap <F8> :TagbarToggle<CR>
+
+" screen split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" enable folding
+set foldmethod=expr  " indent
+set foldlevel=99
+
+" enable folding with the spacebar
+nnoremap <space> za
+
+let g:SimpylFold_docstring_preview=1
+
+" Python
+let python_highlight_all=1
+au BufNewFile,BufRead *.py set tabstop=4 | 
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=79 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set fileformat=unix
+
+let g:python_pep8_indent_multiline_string=1
+
+
+" flag unnecessary whitespace
+highlight BadWhitespace ctermbg=red guibg=darkred
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+
+" for fullstack
+au BufNewFile,BufRead *.js,*.html,*.css
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2 |
+    \ set expandtab |
+    \ set autoindent |
+
+" javascript
+let g:javascript_plugin_flow = 1
+let g:jsx_ext_required = 0
+
+" Ansible and .yml
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+let g:ansible_unindent_after_newline = 1
+let g:ansible_attribute_highlight = "ob"
+let g:ansible_name_highlight = 'd'
+let g:ansible_extra_keywords_highlight = 1
+
+" enable autopairing of quotes
+let g:AutoPairsFlyMode = 0
+let g:AutoPairsShortcutBackInsert = '<M-b>'
