@@ -1,0 +1,11 @@
+# From pip
+bs4
+numexpr
+numpy
+pandas
+pytest
+scikit-learn
+selenium
+xgboost
+
+# From building from github source files
