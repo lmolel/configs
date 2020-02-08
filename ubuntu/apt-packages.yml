@@ -1,0 +1,11 @@
+build-essential
+clang
+cmake
+git
+postgresql
+postgresql-client-10
+redis
+redis-server
+scilab
+sublime-text
+vim
