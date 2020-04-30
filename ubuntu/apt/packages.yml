@@ -2,10 +2,9 @@ build-essential
 clang
 cmake
 git
-postgresql
-postgresql-client-10
-redis
-redis-server
+python3-pip
 scilab
 sublime-text
 vim
+xclip
+xournal
