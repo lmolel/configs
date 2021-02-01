@@ -1,6 +1,7 @@
 build-essential
 clang
 cmake
+curl
 git
 python3-pip
 scilab
